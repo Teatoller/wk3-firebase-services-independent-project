@@ -1,9 +1,11 @@
+import React, { useState ,useEffect } from "react";
 import './App.css';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import Login from './components/auth/Login';
+import Dashboard from "./components/dashboard/Dashboard";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,10 +28,18 @@ const auth = getAuth(app);
 
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setUser);
+  }, []);
+
+  console.log("user!!!!", user)
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
-      <Login auth={auth} />
+      {!user ? (<Login auth={auth} />) : <Dashboard />}
     </div>
   );
 }
