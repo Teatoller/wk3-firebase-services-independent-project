@@ -1,6 +1,7 @@
 import './App.css';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import Login from './components/auth/Login';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,14 +21,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);
+// const analytics = getAnalytics(app);
 
 
 function App() {
   return (
     <div className="App">
       <h1> Profile Bio</h1>
-      <Login />
+      <Login auth={auth} />
     </div>
   );
 }

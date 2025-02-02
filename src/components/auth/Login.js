@@ -1,11 +1,20 @@
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Input } from "../helpers";
 
-export default function Login() {
+export default function Login({ auth}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = {};
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.error("Error signing in: ", error);
+    }
+  };
 
   return (
     <div
