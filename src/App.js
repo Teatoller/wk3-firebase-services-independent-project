@@ -2,7 +2,7 @@ import React, { useState ,useEffect } from "react";
 import './App.css';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import Login from './components/auth/Login';
 import Dashboard from "./components/dashboard/Dashboard";
@@ -36,10 +36,18 @@ function App() {
 
   console.log("user!!!!", user)
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
-      {!user ? (<Login auth={auth} />) : <Dashboard />}
+      {!user ? (<Login auth={auth} />) : <Dashboard handleLogout={handleLogout}/>}
     </div>
   );
 }
