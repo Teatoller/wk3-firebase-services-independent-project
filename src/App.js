@@ -1,10 +1,11 @@
-import React, { useState ,useEffect } from "react";
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { collection, addDoc, getDocs, getFirestore } from "firebase/firestore";
+import "./App.css";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import Login from './components/auth/Login';
+import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -18,23 +19,40 @@ const firebaseConfig = {
   storageBucket: "profile-bio.firebasestorage.app",
   messagingSenderId: "220780267310",
   appId: "1:220780267310:web:3a6a1d31817865cd259cbf",
-  measurementId: "G-TFKJ6VDJ30"
+  measurementId: "G-TFKJ6VDJ30",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 // const analytics = getAnalytics(app);
-
 
 function App() {
   const [user, setUser] = useState(null);
+  const [projects, setProjects] = useState([]);
+  const [newProject, setNewProject] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged(setUser);
+    if (user) fetchData();
   }, []);
 
-  console.log("user!!!!", user)
+  console.log("user!!!!", user);
+  console.log("projects>>>>>", projects);
+  console.log("new projects------", newProject);
+
+  const fetchData = async () => {
+    try {
+      const projectSnapshot = await getDocs(collection(db, "projects"));
+
+      setProjects(
+        projectSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      );
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -44,10 +62,51 @@ function App() {
     }
   };
 
+  // const addProject = async () => {
+  //   try {
+  //     const docRef = await addDoc(collection(db, "projects"), {
+  //       name: projects,
+  //     });
+  //     setProjects([...projects, { id: docRef.id, name: projects }]);
+  //     setProjects("");
+  //   } catch (error) {
+  //     console.error("Error adding project: ", error);
+  //   }
+  // };
+
+  const addProject = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "projects"), {
+        name: newProject,
+      });
+      setProjects([...projects, { id: docRef.id, name: newProject }]);
+      setNewProject("");
+    } catch (error) {
+      console.error("Error adding project: ", error);
+    }
+  };
+
+  // const addProject = async () => {
+  //   if (newProject.trim()) {
+  //     await addDoc(collection(db, "projects"), { name: newProject });
+  //     setNewProject("");
+  //     fetchData();
+  //   }
+  // };
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
-      {!user ? (<Login auth={auth} />) : <Dashboard handleLogout={handleLogout}/>}
+      {!user ? (
+        <Login auth={auth} />
+      ) : (
+        <Dashboard
+          handleLogout={handleLogout}
+          addProject={addProject}
+          newProject={newProject}
+          setNewProject={setNewProject}
+        />
+      )}
     </div>
   );
 }
