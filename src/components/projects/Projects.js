@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Input } from "../helpers";
 
-export default function Projects() {
+export default function Projects({ addProject, newProject, setNewProject }) {
   return (
     <div
       style={{
@@ -22,8 +22,12 @@ export default function Projects() {
         <li>Landscaping project</li>
       </ul>
       <h3> Add project</h3>
-      <Input placeholder="New Project" value="" onChange="" />
-      <Button onClick="">Add Project</Button>
+      <Input
+        placeholder="New Project"
+        value={newProject}
+        onChange={(e) => setNewProject(e.target.value)}
+      />
+      <Button onClick={addProject}>Add Project</Button>
     </div>
   );
 }
