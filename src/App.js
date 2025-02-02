@@ -2,6 +2,7 @@ import './App.css';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import Login from './components/auth/Login';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,6 +27,7 @@ function App() {
   return (
     <div className="App">
       <h1> Profile Bio</h1>
+      <Login />
     </div>
   );
 }
