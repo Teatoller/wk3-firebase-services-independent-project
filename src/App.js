@@ -62,18 +62,6 @@ function App() {
     }
   };
 
-  // const addProject = async () => {
-  //   try {
-  //     const docRef = await addDoc(collection(db, "projects"), {
-  //       name: projects,
-  //     });
-  //     setProjects([...projects, { id: docRef.id, name: projects }]);
-  //     setProjects("");
-  //   } catch (error) {
-  //     console.error("Error adding project: ", error);
-  //   }
-  // };
-
   const addProject = async () => {
     try {
       const docRef = await addDoc(collection(db, "projects"), {
@@ -86,14 +74,6 @@ function App() {
     }
   };
 
-  // const addProject = async () => {
-  //   if (newProject.trim()) {
-  //     await addDoc(collection(db, "projects"), { name: newProject });
-  //     setNewProject("");
-  //     fetchData();
-  //   }
-  // };
-
   return (
     <div className="App">
       <h1> Profile Bio</h1>
@@ -101,6 +81,7 @@ function App() {
         <Login auth={auth} />
       ) : (
         <Dashboard
+          projects={projects}
           handleLogout={handleLogout}
           addProject={addProject}
           newProject={newProject}

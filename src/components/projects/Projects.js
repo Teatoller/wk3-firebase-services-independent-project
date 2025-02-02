@@ -1,7 +1,12 @@
 import React from "react";
 import { Button, Input } from "../helpers";
 
-export default function Projects({ addProject, newProject, setNewProject }) {
+export default function Projects({
+  addProject,
+  newProject,
+  projects,
+  setNewProject,
+}) {
   return (
     <div
       style={{
@@ -16,10 +21,9 @@ export default function Projects({ addProject, newProject, setNewProject }) {
     >
       <h2>Projects</h2>
       <ul>
-        <li>housing project</li>
-        <li>Tree planting exercise</li>
-        <li>Water tower project</li>
-        <li>Landscaping project</li>
+        {projects.map((project) => (
+          <li key={project.id}>{project.name}</li>
+        ))}
       </ul>
       <h3> Add project</h3>
       <Input
