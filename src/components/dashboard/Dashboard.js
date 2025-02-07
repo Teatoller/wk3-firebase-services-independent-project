@@ -19,17 +19,21 @@ export default function Dashboard({
   bio,
   setBio,
   updateBio,
+  deleteProject,
 }) {
   return (
     <div className="dashboard-container">
       <h2>User Dashboard</h2>
-      <Button className="btn logout-btn" onClick={handleLogout}>Logout</Button>
+      <Button className="btn logout-btn" onClick={handleLogout}>
+        Logout
+      </Button>
       <Bio bio={bio} setBio={setBio} updateBio={updateBio} />
       <Projects
         addProject={addProject}
         newProject={newProject}
         projects={projects}
         setNewProject={setNewProject}
+        deleteProject={deleteProject}
       />
       <Skills
         skills={skills}

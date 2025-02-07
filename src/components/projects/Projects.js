@@ -6,16 +6,13 @@ export default function Projects({
   newProject,
   projects,
   setNewProject,
+  deleteProject,
 }) {
   return (
     <div className="section">
       <h2>Projects</h2>
-      {/* <ul>
-        {projects.map((project) => (
-          <li key={project.id}>{project.name}</li>
-        ))}
-      </ul> */}
-      <h3> Add project</h3>
+
+      <h3>Add Project</h3>
       <div className="input-group">
         <Input
           placeholder="Add a New Project"
@@ -23,13 +20,23 @@ export default function Projects({
           value={newProject}
           onChange={(e) => setNewProject(e.target.value)}
         />
-        <Button className="btn secondary-btn" onClick={addProject}>Add Project</Button>
+        <Button className="btn secondary-btn" onClick={addProject}>
+          Add Project
+        </Button>
       </div>
+
       <ul className="list">
         {projects.length > 0 ? (
           projects.map((project) => (
             <li key={project.id} className="list-item">
-              {project.name}
+              <span className="project-name">{project.name}</span>
+              <Button
+                className="btn delete-btn"
+                style={{backgroundColor: "#dc3545"}}
+                onClick={() => deleteProject(project.id)}
+              >
+                Delete
+              </Button>
             </li>
           ))
         ) : (

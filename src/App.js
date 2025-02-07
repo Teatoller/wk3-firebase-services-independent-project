@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, getFirestore, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  getFirestore,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import "./App.css";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -54,7 +62,9 @@ function App() {
       setProjects(
         projectSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
       );
-      setSkills(skillSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setSkills(
+        skillSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      );
       if (!bioDoc.empty) setBio(bioDoc.docs[0].data().text);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -108,6 +118,11 @@ function App() {
     }
   };
 
+  const deleteProject = async (id) => {
+    await deleteDoc(doc(db, "projects", id));
+    fetchData();
+  };
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
@@ -128,6 +143,7 @@ function App() {
           bio={bio}
           setBio={setBio}
           updateBio={updateBio}
+          deleteProject={deleteProject}
         />
       )}
     </div>
