@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, addDoc, getDocs, getFirestore, updateDoc, doc } from "firebase/firestore";
 import "./App.css";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -32,21 +32,9 @@ function App() {
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState("");
-  const [skills, setSkills] = useState([
-    {
-      id: "1",
-      name: "JavaScript",
-    },
-    {
-      id: "2",
-      name: "HTML5",
-    },
-    {
-      id: "3",
-      name: "CSS3",
-    },
-  ]);
+  const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
+  const [bio, setBio] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged(setUser);
@@ -60,10 +48,14 @@ function App() {
   const fetchData = async () => {
     try {
       const projectSnapshot = await getDocs(collection(db, "projects"));
+      const skillSnapshot = await getDocs(collection(db, "skills"));
+      const bioDoc = await getDocs(collection(db, "bio"));
 
       setProjects(
         projectSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
       );
+      setSkills(skillSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      if (!bioDoc.empty) setBio(bioDoc.docs[0].data().text);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -72,6 +64,9 @@ function App() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      setProjects([]);
+      setSkills([]);
+      setBio("");
     } catch (error) {
       console.error("Error signing out: ", error);
     }
@@ -99,6 +94,20 @@ function App() {
     }
   };
 
+  const updateBio = async () => {
+    try {
+      const bioSnapshot = await getDocs(collection(db, "bio"));
+      if (!bioSnapshot.empty) {
+        const bioDocRef = doc(db, "bio", bioSnapshot.docs[0].id);
+        await updateDoc(bioDocRef, { text: bio });
+      } else {
+        await addDoc(collection(db, "bio"), { text: bio });
+      }
+    } catch (error) {
+      console.error("Error updating bio: ", error);
+    }
+  };
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
@@ -116,6 +125,9 @@ function App() {
           newSkill={newSkill}
           setNewSkill={setNewSkill}
           addSkill={addSkill}
+          bio={bio}
+          setBio={setBio}
+          updateBio={updateBio}
         />
       )}
     </div>
