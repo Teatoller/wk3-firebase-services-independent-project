@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../helpers";
 import Projects from "../projects/Projects";
+import Skills from "../skills/Skills";
 
 export default function Dashboard({
   handleLogout,
@@ -19,6 +20,7 @@ export default function Dashboard({
         projects={projects}
         setNewProject={setNewProject}
       />
+      <Skills />
     </div>
   );
 }
