@@ -32,7 +32,20 @@ function App() {
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState("");
-  const [skills, setSkills] = useState([]);
+  const [skills, setSkills] = useState([
+    {
+      id: "1",
+      name: "JavaScript",
+    },
+    {
+      id: "2",
+      name: "HTML5",
+    },
+    {
+      id: "3",
+      name: "CSS3",
+    },
+  ]);
   const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
@@ -98,6 +111,11 @@ function App() {
           addProject={addProject}
           newProject={newProject}
           setNewProject={setNewProject}
+          skills={skills}
+          setSkills={setSkills}
+          newSkill={newSkill}
+          setNewSkill={setNewSkill}
+          addSkill={addSkill}
         />
       )}
     </div>
