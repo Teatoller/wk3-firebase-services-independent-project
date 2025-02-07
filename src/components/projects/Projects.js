@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Input } from "../helpers";
 
 export default function Projects({
@@ -7,12 +7,15 @@ export default function Projects({
   projects,
   setNewProject,
   deleteProject,
+  editProject,
 }) {
+  const [editMode, setEditMode] = useState(null);
+  const [editValue, setEditValue] = useState("");
+
   return (
     <div className="section">
       <h2>Projects</h2>
-
-      <h3>Add Project</h3>
+      <h3>Add project</h3>
       <div className="input-group">
         <Input
           placeholder="Add a New Project"
@@ -24,19 +27,61 @@ export default function Projects({
           Add Project
         </Button>
       </div>
-
       <ul className="list">
         {projects.length > 0 ? (
           projects.map((project) => (
             <li key={project.id} className="list-item">
-              <span className="project-name">{project.name}</span>
-              <Button
-                className="btn delete-btn"
-                style={{backgroundColor: "#dc3545"}}
-                onClick={() => deleteProject(project.id)}
-              >
-                Delete
-              </Button>
+              {editMode === project.id ? (
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                />
+              ) : (
+                <span>{project.name}</span>
+              )}
+
+              <div className="button-group">
+                {editMode === project.id ? (
+                  <>
+                    <Button
+                      className="btn success-btn"
+                      style={{marginRight: "2px", backgroundColor: "green"}}
+                      onClick={() => {
+                        editProject(project.id, editValue);
+                        setEditMode(null);
+                      }}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      className="btn secondary-btn"
+                      onClick={() => setEditMode(null)}
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="btn edit-btn"
+                      style={{marginRight: "2px", backgroundColor: "orange"}}
+                      onClick={() => {
+                        setEditMode(project.id);
+                        setEditValue(project.name);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="btn error-btn"
+                      onClick={() => deleteProject(project.id)}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                )}
+              </div>
             </li>
           ))
         ) : (
