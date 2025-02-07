@@ -138,7 +138,7 @@ function App() {
     try {
       const projectRef = doc(db, "projects", id);
       await updateDoc(projectRef, { name: newName });
-  
+
       setProjects((prevProjects) =>
         prevProjects.map((proj) =>
           proj.id === id ? { ...proj, name: newName } : proj
@@ -153,7 +153,7 @@ function App() {
     try {
       const skillRef = doc(db, "skills", id);
       await updateDoc(skillRef, { name: newName });
-  
+
       setSkills((prevSkills) =>
         prevSkills.map((skill) =>
           skill.id === id ? { ...skill, name: newName } : skill
@@ -163,8 +163,6 @@ function App() {
       console.error("Error updating skill: ", error);
     }
   };
-  
-  
 
   return (
     <div className="App">
