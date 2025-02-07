@@ -32,6 +32,21 @@ function App() {
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState("");
+  const [skills, setSkills] = useState([
+    {
+      id: "1",
+      name: "JavaScript",
+    },
+    {
+      id: "2",
+      name: "HTML5",
+    },
+    {
+      id: "3",
+      name: "CSS3",
+    },
+  ]);
+  const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged(setUser);
@@ -74,6 +89,16 @@ function App() {
     }
   };
 
+  const addSkill = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "skills"), { name: newSkill });
+      setSkills([...skills, { id: docRef.id, name: newSkill }]);
+      setNewSkill("");
+    } catch (error) {
+      console.error("Error adding skill: ", error);
+    }
+  };
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
@@ -86,6 +111,11 @@ function App() {
           addProject={addProject}
           newProject={newProject}
           setNewProject={setNewProject}
+          skills={skills}
+          setSkills={setSkills}
+          newSkill={newSkill}
+          setNewSkill={setNewSkill}
+          addSkill={addSkill}
         />
       )}
     </div>

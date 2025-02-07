@@ -9,6 +9,11 @@ export default function Dashboard({
   newProject,
   projects,
   setNewProject,
+  skills,
+  setSkills,
+  newSkill,
+  setNewSkill,
+  addSkill,
 }) {
   return (
     <div>
@@ -20,7 +25,13 @@ export default function Dashboard({
         projects={projects}
         setNewProject={setNewProject}
       />
-      <Skills />
+      <Skills
+        skills={skills}
+        setSkills={setSkills}
+        newSkill={newSkill}
+        setNewSkill={setNewSkill}
+        addSkill={addSkill}
+      />
     </div>
   );
 }
