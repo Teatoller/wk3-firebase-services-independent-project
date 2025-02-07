@@ -7,17 +7,13 @@ export default function Skills({
   newSkill,
   setNewSkill,
   addSkill,
+  deleteSkill,
 }) {
   return (
     <div
       className="section"
     >
       <h2>Skills component</h2>
-      {/* <ul>
-        {skills.map((skill) => (
-          <li key={skill.id}>{skill.name}</li>
-        ))}
-      </ul> */}
       <div className="input-group">
       <Input
         placeholder="Add a New Skill"
@@ -31,8 +27,17 @@ export default function Skills({
           {skills.length > 0 ? (
             skills.map((skill) => (
               <li key={skill.id} className="list-item">
-                {skill.name}
+                {/* {skill.name} */}
+                <span className="project-name">{skill.name}</span>
+                            <Button
+                              className="btn delete-btn"
+                              style={{backgroundColor: "#dc3545"}}
+                              onClick={() => deleteSkill(skill.id)}
+                            >
+                              Delete
+                            </Button>
               </li>
+               
             ))
           ) : (
             <p className="empty-message">No skills added yet.</p>

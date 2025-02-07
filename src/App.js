@@ -49,6 +49,12 @@ function App() {
     if (user) fetchData();
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
+
   console.log("user!!!!", user);
   console.log("projects>>>>>", projects);
   console.log("new projects------", newProject);
@@ -123,6 +129,11 @@ function App() {
     fetchData();
   };
 
+  const deleteSkill = async (id) => {
+    await deleteDoc(doc(db, "skills", id));
+    fetchData();
+  };
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
@@ -144,6 +155,7 @@ function App() {
           setBio={setBio}
           updateBio={updateBio}
           deleteProject={deleteProject}
+          deleteSkill={deleteSkill}
         />
       )}
     </div>
