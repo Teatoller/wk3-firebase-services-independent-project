@@ -15,6 +15,9 @@ export default function Bio({ bio, setBio, updateBio }) {
       }}
     >
       <h2>Bio</h2>
+      <ul>
+        <li>{bio}</li>
+      </ul>
       <textarea
         value={bio}
         onChange={(e) => setBio(e.target.value)}
