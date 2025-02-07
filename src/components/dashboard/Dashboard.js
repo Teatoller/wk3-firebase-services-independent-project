@@ -3,6 +3,7 @@ import { Button } from "../helpers";
 import Projects from "../projects/Projects";
 import Skills from "../skills/Skills";
 import Bio from "../bio/Bio";
+import "../../Styles.css";
 
 export default function Dashboard({
   handleLogout,
@@ -20,9 +21,9 @@ export default function Dashboard({
   updateBio,
 }) {
   return (
-    <div>
+    <div className="dashboard-container">
       <h2>User Dashboard</h2>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button className="btn logout-btn" onClick={handleLogout}>Logout</Button>
       <Bio bio={bio} setBio={setBio} updateBio={updateBio} />
       <Projects
         addProject={addProject}
