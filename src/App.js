@@ -148,6 +148,22 @@ function App() {
       console.error("Error updating project: ", error);
     }
   };
+
+  const editSkill = async (id, newName) => {
+    try {
+      const skillRef = doc(db, "skills", id);
+      await updateDoc(skillRef, { name: newName });
+  
+      setSkills((prevSkills) =>
+        prevSkills.map((skill) =>
+          skill.id === id ? { ...skill, name: newName } : skill
+        )
+      );
+    } catch (error) {
+      console.error("Error updating skill: ", error);
+    }
+  };
+  
   
 
   return (
@@ -173,6 +189,7 @@ function App() {
           deleteProject={deleteProject}
           deleteSkill={deleteSkill}
           editProject={editProject}
+          editSkill={editSkill}
         />
       )}
     </div>
