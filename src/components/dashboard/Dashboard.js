@@ -22,6 +22,7 @@ export default function Dashboard({
   deleteProject,
   deleteSkill,
   editProject,
+  editSkill,
 }) {
   return (
     <div className="dashboard-container">
@@ -45,6 +46,7 @@ export default function Dashboard({
         setNewSkill={setNewSkill}
         addSkill={addSkill}
         deleteSkill={deleteSkill}
+        editSkill={editSkill}
       />
     </div>
   );

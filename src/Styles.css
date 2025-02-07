@@ -72,11 +72,6 @@ h2 {
   color: white;
 }
 
-.error-btn {
-  background: #eb2525;
-  color: white;
-}
-
 .secondary-btn:hover {
   background: #1e7e34;
 }
@@ -134,4 +129,21 @@ h2 {
 
 .delete-btn:hover {
   background: #b02a37;
+}
+
+.button-group {
+  display: flex;
+  gap: 6px; /* Reduces space between buttons */
+}
+
+.edit-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.error-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
 }
