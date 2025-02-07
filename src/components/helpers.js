@@ -44,7 +44,3 @@ export const Input = ({
     />
   );
 };
-
-export const CardContent = ({ children, style = {} }) => {
-  return <div style={{ padding: "16px", ...style }}>{children}</div>;
-};
