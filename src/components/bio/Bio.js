@@ -10,7 +10,7 @@ export default function Bio({ bio, setBio, updateBio }) {
         onChange={(e) => setBio(e.target.value)}
         className="input-textarea"
       ></textarea>
-      <Button className="btn primary-btn" onClick={updateBio}>
+      <Button className="btn success-btn" onClick={updateBio}>
         Update Bio
       </Button>
     </div>
