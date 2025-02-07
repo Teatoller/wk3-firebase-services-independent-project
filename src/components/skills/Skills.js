@@ -1,21 +1,13 @@
 import React from "react";
 import { Button, Input } from "../helpers";
 
-export default function Skills() {
-  const skills = [
-    {
-      id: "1",
-      name: "JavaScript",
-    },
-    {
-      id: "2",
-      name: "HTML5",
-    },
-    {
-      id: "3",
-      name: "CSS3",
-    },
-  ];
+export default function Skills({
+  skills,
+  setSkills,
+  newSkill,
+  setNewSkill,
+  addSkill,
+}) {
   return (
     <div
       style={{
@@ -34,8 +26,12 @@ export default function Skills() {
           <li key={skill.id}>{skill.name}</li>
         ))}
       </ul>
-      <Input placeholder="Add a New Skill" value="" onChange="" />
-      <Button onClick="">Add Skill</Button>
+      <Input
+        placeholder="Add a New Skill"
+        value={newSkill}
+        onChange={(e) => setNewSkill(e.target.value)}
+      />
+      <Button onClick={addSkill}>Add Skill</Button>
     </div>
   );
 }
