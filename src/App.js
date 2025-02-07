@@ -32,6 +32,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged(setUser);
@@ -71,6 +73,16 @@ function App() {
       setNewProject("");
     } catch (error) {
       console.error("Error adding project: ", error);
+    }
+  };
+
+  const addSkill = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "skills"), { name: newSkill });
+      setSkills([...skills, { id: docRef.id, name: newSkill }]);
+      setNewSkill("");
+    } catch (error) {
+      console.error("Error adding skill: ", error);
     }
   };
 
