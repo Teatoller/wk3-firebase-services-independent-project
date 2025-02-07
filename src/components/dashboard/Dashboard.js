@@ -21,6 +21,7 @@ export default function Dashboard({
   updateBio,
   deleteProject,
   deleteSkill,
+  editProject,
 }) {
   return (
     <div className="dashboard-container">
@@ -35,6 +36,7 @@ export default function Dashboard({
         projects={projects}
         setNewProject={setNewProject}
         deleteProject={deleteProject}
+        editProject={editProject}
       />
       <Skills
         skills={skills}

@@ -134,6 +134,22 @@ function App() {
     fetchData();
   };
 
+  const editProject = async (id, newName) => {
+    try {
+      const projectRef = doc(db, "projects", id);
+      await updateDoc(projectRef, { name: newName });
+  
+      setProjects((prevProjects) =>
+        prevProjects.map((proj) =>
+          proj.id === id ? { ...proj, name: newName } : proj
+        )
+      );
+    } catch (error) {
+      console.error("Error updating project: ", error);
+    }
+  };
+  
+
   return (
     <div className="App">
       <h1> Profile Bio</h1>
@@ -156,6 +172,7 @@ function App() {
           updateBio={updateBio}
           deleteProject={deleteProject}
           deleteSkill={deleteSkill}
+          editProject={editProject}
         />
       )}
     </div>
