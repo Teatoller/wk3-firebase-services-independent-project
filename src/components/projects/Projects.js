@@ -27,7 +27,7 @@ export default function Projects({
       </ul>
       <h3> Add project</h3>
       <Input
-        placeholder="New Project"
+        placeholder="Add a New Project"
         value={newProject}
         onChange={(e) => setNewProject(e.target.value)}
       />
