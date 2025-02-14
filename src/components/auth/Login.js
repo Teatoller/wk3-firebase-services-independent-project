@@ -1,18 +1,32 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Input } from "../helpers";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
-export default function Login({ auth}) {
+
+export default function Login({ auth, db }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setEmail("");
-      setPassword("");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        return { user, role: userDoc.data().role };
+      } else {
+        console.error("User role not found");
+        return { user, role: "user" };
+      }
     } catch (error) {
-      console.error("Error signing in: ", error);
+      console.error("Login error:", error);
+      return null;
     }
   };
 

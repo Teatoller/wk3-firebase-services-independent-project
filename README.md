@@ -31,6 +31,17 @@ on the terminal run
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+### login sample
+
+#### As an Admin
+
+#### Username: terry@test.com
+#### Password: test123
+
+#### As a User
+#### Username: sunking@test.com
+#### Password: test123
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
@@ -47,7 +58,7 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 # Link to live site n/a
-[profile bio]()
+[profile bio](https://profile-bio.web.app)
 
 # Copyright and License information
 Copyright © 2025, Steven Ennis. Released under the [MIT License](LICENSE)
