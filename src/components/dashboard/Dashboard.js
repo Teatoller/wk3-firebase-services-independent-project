@@ -1,9 +1,8 @@
 import React from "react";
-import { Button } from "../helpers";
-import Projects from "../projects/Projects";
-import Skills from "../skills/Skills";
-import Bio from "../bio/Bio";
 import "../../Styles.css";
+import AdminDashboard from "./AdminDashboard";
+import UserDashboard from "./UserDashboard";
+import Login from "../auth/Login";
 
 export default function Dashboard({
   handleLogout,
@@ -23,31 +22,61 @@ export default function Dashboard({
   deleteSkill,
   editProject,
   editSkill,
+  user,
+  auth,
+  role,
 }) {
   return (
     <div className="dashboard-container">
-      <h2>User Dashboard</h2>
-      <Button className="btn logout-btn" onClick={handleLogout}>
-        Logout
-      </Button>
-      <Bio bio={bio} setBio={setBio} updateBio={updateBio} />
-      <Projects
-        addProject={addProject}
-        newProject={newProject}
-        projects={projects}
-        setNewProject={setNewProject}
-        deleteProject={deleteProject}
-        editProject={editProject}
-      />
-      <Skills
-        skills={skills}
-        setSkills={setSkills}
-        newSkill={newSkill}
-        setNewSkill={setNewSkill}
-        addSkill={addSkill}
-        deleteSkill={deleteSkill}
-        editSkill={editSkill}
-      />
+      {!user ? (
+        <Login auth={auth} />
+      ) : role === "admin" ? (
+        <AdminDashboard
+          handleLogout={handleLogout}
+          user={user}
+          auth={auth}
+          role={role}
+          projects={projects}
+          addProject={addProject}
+          newProject={newProject}
+          setNewProject={setNewProject}
+          skills={skills}
+          setSkills={setSkills}
+          newSkill={newSkill}
+          setNewSkill={setNewSkill}
+          addSkill={addSkill}
+          bio={bio}
+          setBio={setBio}
+          updateBio={updateBio}
+          deleteProject={deleteProject}
+          deleteSkill={deleteSkill}
+          editProject={editProject}
+          editSkill={editSkill}
+        />
+      ) : (
+        <UserDashboard
+          handleLogout={handleLogout}
+          user={user}
+          auth={auth}
+          role={role}
+          projects={projects}
+          addProject={addProject}
+          newProject={newProject}
+          setNewProject={setNewProject}
+          skills={skills}
+          setSkills={setSkills}
+          newSkill={newSkill}
+          setNewSkill={setNewSkill}
+          addSkill={addSkill}
+          bio={bio}
+          setBio={setBio}
+          updateBio={updateBio}
+          deleteProject={deleteProject}
+          deleteSkill={deleteSkill}
+          editProject={editProject}
+          editSkill={editSkill}
+        />
+      )}
     </div>
   );
 }
