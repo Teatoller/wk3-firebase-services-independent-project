@@ -7,6 +7,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import "./App.css";
 // Import the functions you need from the SDKs you need
@@ -15,6 +16,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import Register from "./components/register/Register";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,15 +40,36 @@ const db = getFirestore(app);
 
 function App() {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState("");
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
   const [bio, setBio] = useState("");
+  const [showRegister, setShowRegister] = useState(false);
+
+  console.log("...role", role)
+
+  // useEffect(() => {
+  //   auth.onAuthStateChanged(setUser);
+  //   if (user) fetchData();
+  // }, []);
 
   useEffect(() => {
-    auth.onAuthStateChanged(setUser);
-    if (user) fetchData();
+    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        const userDoc = await getDoc(doc(db, "users", authUser.uid));
+        if (userDoc.exists()) {
+          setUser(authUser);
+          setRole(userDoc.data().role);
+        }
+      } else {
+        setUser(null);
+        setRole(null);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup on unmount
   }, []);
 
   useEffect(() => {
@@ -54,10 +77,6 @@ function App() {
       fetchData();
     }
   }, [user]);
-
-  console.log("user!!!!", user);
-  console.log("projects>>>>>", projects);
-  console.log("new projects------", newProject);
 
   const fetchData = async () => {
     try {
@@ -79,7 +98,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await signOut(auth, db);
       setProjects([]);
       setSkills([]);
       setBio("");
@@ -168,11 +187,18 @@ function App() {
     <div className="App">
       <h1> Profile Bio</h1>
       {!user ? (
-        <Login auth={auth} />
+        showRegister ? (
+          <Register auth={auth} db={db} />
+        ) : (
+          <Login auth={auth} />
+        )
       ) : (
         <Dashboard
-          projects={projects}
+          user={user}
+          auth={auth}
+          role={role}
           handleLogout={handleLogout}
+          projects={projects}
           addProject={addProject}
           newProject={newProject}
           setNewProject={setNewProject}
@@ -190,6 +216,12 @@ function App() {
           editSkill={editSkill}
         />
       )}
+
+      {! user && <button onClick={() => setShowRegister((prev) => !prev)}>
+        {showRegister
+          ? "Already have an account? Login"
+          : "Don't have an account? Register"}
+      </button>}
     </div>
   );
 }
