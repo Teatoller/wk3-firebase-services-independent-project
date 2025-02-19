@@ -17,8 +17,8 @@
 
 1. Create a folder on your machine `mkdir myproject`
 2. `cd myproject`
-3. Run `git https://github.com/Teatoller/wk3-independent-project.git`
-4. `cd wk3-independent-project`
+3. Run `git clone https://github.com/Teatoller/profile-bio.git`
+4. `cd profile-bio.git`
 5. open **task-manager-application** in your chosen editor. For **vscode** enter `code .` on terminal and press enter.
 6. `git checkout main`
 
